@@ -14,20 +14,17 @@
             2021. However, the Democratic and Republican primaries are June 22nd,
             2021. According to <a href="https://www.newyorkcountypolitics.com/2021-election-whos-running-for-what/">
             New York County Politics</a>, there are 32 candidates registered
-            for the election.
+            for the election. Unfortunately, not all regeistered candidates do not have
+            sufficient Twitter profiles for analysis, so only the 14 candidates
+            who have Tweeted more than 500 times are included in the analysis.
             <br>
             <br>
-            <figure>
-              <img src="static/img/NYC_county_politics_1.png" alt="candidates_top" class="img-raised img-fluid" style="width:800px;height:266px;">
-              <img src="static/img/NYC_county_politics_2.png" alt="candidates_bottom" class="img-raised img-fluid" style="width:800px;height:400px;">
-              <figcaption>Candidate images taken from NY County Politics</figcaption>
-            </figure>
+            <img src="static/img/NYC_county_politics_1.png" alt="candidates_top" class="img-raised img-fluid" style="width:800px;height:266px;">
+            <img src="static/img/NYC_county_politics_2.png" alt="candidates_bottom" class="img-raised img-fluid" style="width:800px;height:400px;">
             <br>
-            Unfortunately, not all registered candidates have sufficient Twitter
-            profiles for analysis, so only the 14 candidates who have Tweeted
-            more than 500 times are included in the analysis. To see how these
-            14 candidates compare to a politician that you know,
-            enter that politician's Twitter handle below!
+            <br>
+            To see how these 14 candidates compare to a renowned politician that
+            you know, enter that politician's Twitter handle below!
           </h5>
       </div>
     </div>
@@ -51,5 +48,30 @@
     </div>
   <div/>
 </section>
+
+<!-- Bar chart -->
+<section id="bar_sim_plot">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 ml-auto mr-auto">
+        <h2 class="title text-center">Simiarities to {{entered_handle}}</h2>
+        {{ script | safe }}
+        {{ div | safe }}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--
+<section id="most-similar-info">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 ml-auto mr-auto">
+        <h2 class="title text-center">Most similar to {{ entered_handle }}</h2>
+      </div>
+    </div>
+  </div>
+</section>
+-->
 
 {% endblock %}
