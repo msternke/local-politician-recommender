@@ -148,10 +148,8 @@ def make_sim_bar_chart(matrix):
 
     tools = ['pan', 'reset', HoverTool(tooltips=[("Politician", "@x"), ("Similarity", "@top")])]
 
-
     p = figure(x_range=matrix.index.to_list(), plot_height=400,
                plot_width=600, tools=tools)
-
 
     p.vbar(x=matrix.index.to_list(), top=matrix.values.flatten(), width=0.75)
 

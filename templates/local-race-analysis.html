@@ -36,9 +36,18 @@
         <form class="" action="/local-race-analysis#bar_sim_plot" method="post">
           <div class="row">
             <div class="form-group bmd-form-group col-lg ml-auto mr-auto">
-              <label class="bmd-label-static">Enter politician Twitter handle</label>
+              <label class="bmd-label-static" for="entered-handle">Enter politician Twitter handle</label>
               <input id="entered-handle" type="text" class="form-control" placeholder="Ex: joebiden" name="handle">
+              <div>
+                <input type="radio" id="most" name="most-least" value="Most" checked>
+                <label for="most">Tell me more about the <b>MOST</b> similar politician</label>
+              </div>
+              <div>
+                <input type="radio" id="least" name="most-least" value="Least">
+                <label for="most">Tell me more about the <b>LEAST</b> similar politician</label>
+              </div>
               <input type="submit" class="btn btn-md" value="Analyze politician!" method="post">
+              <br>
             </div>
            </div>
            <h6>Be patient! It may take a minute to analyze the Twitter profile...</h6>
@@ -54,7 +63,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-8 ml-auto mr-auto">
-        <h2 class="title text-center">Simiarities to {{entered_handle}}</h2>
+        <h2 class="title text-center">Similarities to {{entered_handle}}</h2>
         {{ script | safe }}
         {{ div | safe }}
       </div>
@@ -62,16 +71,22 @@
   </div>
 </section>
 
-<!--
-<section id="most-similar-info">
+<!-- Most similar analysis -->
+<section id="sim-analysis">
   <div class="container">
+    <h2 class="title text-center">{{most_least}} similar: {{top}}</h2>
     <div class="row">
-      <div class="col-md-8 ml-auto mr-auto">
-        <h2 class="title text-center">Most similar to {{ entered_handle }}</h2>
+      <div class="col-md-8  col-md-offset-8">
+        <figure>
+          <img src="{{top_img}}" alt="pic" class="img-fluid">
+        </figure>
+      </div>
+      <div class="col-md-8  col-md-offset-8">
+        <h5>Party: {{out_party}}</h5>
+        <h5>Website: <a href="{{website}}">{{website}}</a></h5>
       </div>
     </div>
   </div>
 </section>
--->
 
 {% endblock %}

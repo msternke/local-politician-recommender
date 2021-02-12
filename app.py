@@ -15,7 +15,7 @@ import app_tools
 app = Flask(__name__)
 app.vars = {}
 
-#setting initial values
+
 
 @app.route('/')
 def index():
@@ -35,31 +35,47 @@ def local_race_analysis():
         #loading NYC mayor word matrix and creating its similarity matrix
         with open('data/word_matrices/nyc_mayor.pkl', 'rb') as file:
             nyc_mayor_word_matrix = pickle.load(file)
+        with open('data/nyc_mayor_info_all.csv', 'rb') as file:
+            nyc_mayor_info = pd.read_csv(file)
+
+
         cos_sim_df = app_tools.create_similarity_matrix(cosine_similarity, nyc_mayor_word_matrix)
 
         #run analysis for entered Twitter handle
         handle = request.form['handle']
+        most_least = request.form['most-least']
         updated_word_matrix, updated_cos_sim_df = app_tools.determine_user_similarity(handle, nyc_mayor_word_matrix)
         similarity_vector = updated_cos_sim_df[handle].sort_values(ascending=False).iloc[1:].to_frame()
 
         #Making similiarty bar chart
         fig_similaity_bar = app_tools.make_sim_bar_chart(similarity_vector)
-
-
-        #Running PCA on word matrix
-        nyc_mayor_pca = PCA(n_components=2)
-        nyc_mayor_pcs = nyc_mayor_pca.fit_transform(nyc_mayor_word_matrix)
-        updated_pcs = nyc_mayor_pca.transform(updated_word_matrix)
-        fig_pca = app_tools.make_pca_plot(nyc_mayor_pcs, [i.replace("-", " ") for i in nyc_mayor_word_matrix.index])
-        fig_pca.circle(updated_pcs[-1,0], y = updated_pcs[-1,1], size=10,
-                        color = 'red', legend_label = handle)
-
         script, div = components(fig_similaity_bar)
+
+        #chosen candidate info
+        if most_least == 'Most':
+            cand_index = 0
+        else:
+            cand_index = -1
+        top_img = f"static/img/nyc_mayor_imgs/{similarity_vector.index[cand_index].replace(' ', '-')}.png"
+        chosen_cand = similarity_vector.index[cand_index]
+
+        cand_info = nyc_mayor_info[nyc_mayor_info['name'] == chosen_cand].iloc[0]
+        website = cand_info['website']
+        party = cand_info['party']
+        if party == 'D':
+            out_party = 'Democrat'
+        elif party == 'R':
+            out_party = 'Republican'
+        else:
+            out_party = 'Third party'
 
     else:
         return render_template('local-race.html')
 
-    return render_template('local-race-analysis.html', script=script, div=div, entered_handle=handle)
+    return render_template('local-race-analysis.html', script=script,
+                            div=div, entered_handle=handle, top=chosen_cand,
+                            top_img=top_img, most_least=most_least, website=website,
+                            out_party=out_party)
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)

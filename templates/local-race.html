@@ -39,9 +39,18 @@
         <form class="" action="/local-race-analysis#bar_sim_plot" method="post">
           <div class="row">
             <div class="form-group bmd-form-group col-lg ml-auto mr-auto">
-              <label class="bmd-label-static">Enter politician Twitter handle</label>
+              <label class="bmd-label-static" for="entered-handle">Enter politician Twitter handle</label>
               <input id="entered-handle" type="text" class="form-control" placeholder="Ex: joebiden" name="handle">
+              <div>
+                <input type="radio" id="most" name="most-least" value="Most" checked>
+                <label for="most">Tell me more about the <b>MOST</b> similar politician</label>
+              </div>
+              <div>
+                <input type="radio" id="least" name="most-least" value="Least">
+                <label for="most">Tell me more about the <b>LEAST</b> similar politician</label>
+              </div>
               <input type="submit" class="btn btn-md" value="Analyze politician!" method="post">
+              <br>
             </div>
            </div>
            <h6>Be patient! It may take a minute to analyze the Twitter profile...</h6>
