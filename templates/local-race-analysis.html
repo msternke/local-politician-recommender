@@ -40,13 +40,13 @@
               <input id="entered-handle" type="text" class="form-control" placeholder="Ex: joebiden" name="handle">
               <div>
                 <input type="radio" id="most" name="most-least" value="Most" checked>
-                <label for="most">Tell me more about the <b>MOST</b> similar politician</label>
+                <label for="most">Tell me more about the <b>MOST</b> similar mayoral candidate</label>
               </div>
               <div>
                 <input type="radio" id="least" name="most-least" value="Least">
-                <label for="most">Tell me more about the <b>LEAST</b> similar politician</label>
+                <label for="most">Tell me more about the <b>LEAST</b> similar mayoral candidate</label>
               </div>
-              <input type="submit" class="btn btn-md" value="Analyze politician!" method="post">
+              <input type="submit" class="btn btn-info" value="Analyze politician!" method="post">
               <br>
             </div>
            </div>
@@ -76,12 +76,12 @@
   <div class="container">
     <h2 class="title text-center">{{most_least}} similar: {{top}}</h2>
     <div class="row">
-      <div class="col-md-8  col-md-offset-8">
+      <div class="col-lg-12 text-center">
         <figure>
           <img src="{{top_img}}" alt="pic" class="img-fluid">
         </figure>
       </div>
-      <div class="col-md-8  col-md-offset-8">
+      <div class="col-lg-12 text-center">
         <h5>Party: {{out_party}}</h5>
         <h5>Website: <a href="{{website}}">{{website}}</a></h5>
       </div>
