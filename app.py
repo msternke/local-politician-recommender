@@ -5,7 +5,7 @@ import pickle
 
 from bokeh.plotting import figure
 from bokeh.embed import components
-from bokeh.models import ColumnDataSource, HoverTool
+from bokeh.models import ColumnDataSource, HoverTool, Legend
 
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.decomposition import PCA
@@ -48,7 +48,7 @@ def local_race_analysis():
         similarity_vector = updated_cos_sim_df[handle].sort_values(ascending=False).iloc[1:].to_frame()
 
         #Making similiarty bar chart
-        fig_similaity_bar = app_tools.make_sim_bar_chart(similarity_vector)
+        fig_similaity_bar = app_tools.make_sim_bar_chart(similarity_vector, nyc_mayor_info)
         script, div = components(fig_similaity_bar)
 
         #chosen candidate info
@@ -62,12 +62,6 @@ def local_race_analysis():
         cand_info = nyc_mayor_info[nyc_mayor_info['name'] == chosen_cand].iloc[0]
         website = cand_info['website']
         party = cand_info['party']
-        if party == 'D':
-            out_party = 'Democrat'
-        elif party == 'R':
-            out_party = 'Republican'
-        else:
-            out_party = 'Third party'
 
     else:
         return render_template('local-race.html')
@@ -75,7 +69,7 @@ def local_race_analysis():
     return render_template('local-race-analysis.html', script=script,
                             div=div, entered_handle=handle, top=chosen_cand,
                             top_img=top_img, most_least=most_least, website=website,
-                            out_party=out_party)
+                            out_party=party)
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)

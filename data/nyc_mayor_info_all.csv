@@ -1,33 +1,35 @@
-,name,party,website,election_type,twitter_handles,curbed_contenter
-0,Eric Adams,D,https://www.ericadams2021.com/,mayor,ericadamsfornyc,1
-1,Art Chang,D,https://www.chang.nyc,mayor,achangnyc,0
-2,Eddie Cullen,D,https://www.eddiecullen.com/,mayor,eddiecullen4nyc,0
-3,Shaun Donovan,D,https://www.shaunfornyc.com/,mayor,ShaunDonovanNYC,1
-4,Thomas Downs,O,https://www.downsformayor.nyc/,mayor,DownsforMayor,0
-5,Guiddalia Emilien,O,https://guiddaliaformayor.com,mayor,Guiddalia4Mayor,0
-6,Vitaly Filipchenko,O,https://www.vitalyformayor.com/,mayor,VitalyForMayor,0
-7,Cleopatra Fitzgerald,R,https://cleopatrafitzgeraldforthefiveboroughs.us,mayor,cleopatrafitz05,0
-8,Aaron Foldenauer,D,https://aaronfornyc.com/,mayor,aaronfoldenauer,0
-9,Quanda Francis,D,https://quandafrancis.com/,mayor,QuandaFrancis,0
-10,Kathryn Garcia,D,https://www.kgfornyc.com/,mayor,KGforNYC,0
-11,Garry Guerrier,O,https://garryguerrier4mayor.com/,mayor,Guerrier4Mayor,0
-12,Peter Guimaraes,O,https://twitter.com/tipsygirlnyc,mayor,tipsygirlnyc,0
-13,Barbara Kavovit,O,https://www.barbarakformayor.com,mayor,msbarbarak,1
-14,Christopher S. Krietchman,O,https://csk4mayor.nyc,mayor,ChrisKrietchman,0
-15,Abbey Laurel-Smith,R,https://smithiegoeswest.com/,mayor,The47thPOTUS,0
-16,Ray McGuire,D,https://www.rayformayor.com/,mayor,RayForMayor,1
-17,Carlos Menchaca,D,https://carlos2021.com/,mayor,cmenchaca,1
-18,Dianne Morales,D,https://www.dianne.nyc/,mayor,Dianne4NYC,1
-19,Bill Pepitone,R,https://billpepitonefornycmayor.com/,mayor,PepitoneForNYC,0
-20,Paperboy Prince,D,http://paperboyprince.com/,mayor,PaperboyPrince,0
-21,Stacey Prussman,O,https://www.prussmanformayor.com/aboutstacey,mayor,StaceyPrussman,0
-22,Stephen Bishop Seely,O,https://www.seely4mayor.com/,mayor,Seely4Mayor,0
-23,Curtis Sliwa,R,https://www.facebook.com/SliwaforNYC2021/,mayor,SliwaforNYC2021,1
-24,Scott Stringer,D,https://stringerformayor.com/,mayor,scottmstringer,1
-25,Loree Sutton,D,https://loreeformayor.nyc/,mayor,LoreeSuttonNYC,1
-26,Ahsan Syed,O,https://twitter.com/endorsenyc,mayor,endorsenyc,0
-27,Joycelyn Taylor,D,https://taylorfor2021.com/,mayor,Taylorfor2021,0
-28,Sara Tirschwell,R,https://www.saraformayor.com,mayor,sara4mayor,0
-29,Maya Wiley,D,https://mayawileyformayor.com/,mayor,mayawiley,1
-30,Isaac Wright Jr.,D,https://wrightfornyc2021.com/,mayor,IsaacWrightJr,0
-31,Andrew Yang,D,https://www.yangforny.com/,mayor,AndrewYang,1
+,name,party,website,twitter_handles
+0,Eric Adams,Democrat,https://www.ericadams2021.com/,ericadamsfornyc
+1,Art Chang,Democrat,https://www.chang.nyc,achangnyc
+2,Eddie Cullen,Democrat,https://www.eddiecullen.com/,eddiecullen4nyc
+3,Shaun Donovan,Democrat,https://www.shaunfornyc.com/,ShaunDonovanNYC
+4,Thomas Downs,Other,https://www.downsformayor.nyc/,DownsforMayor
+5,Guiddalia Emilien,Other,https://guiddaliaformayor.com,Guiddalia4Mayor
+6,Vitaly Filipchenko,Other,https://www.vitalyformayor.com/,VitalyForMayor
+7,Cleopatra Fitzgerald,Democrat,https://cleopatrafitzgeraldforthefiveboroughs.us,cleopatrafitz05
+8,Aaron Foldenauer,Democrat,https://aaronfornyc.com/,aaronfoldenauer
+9,Quanda Francis,Democrat,https://quandafrancis.com/,QuandaFrancis
+10,Kathryn Garcia,Democrat,https://www.kgfornyc.com/,KGforNYC
+11,Garry Guerrier,Other,https://garryguerrier4mayor.com/,Guerrier4Mayor
+12,Peter Guimaraes,Other,https://twitter.com/tipsygirlnyc,tipsygirlnyc
+13,Barbara Kavovit,Other,https://www.barbarakformayor.com,msbarbarak
+14,Christopher S. Krietchman,Other,https://csk4mayor.nyc,ChrisKrietchman
+15,Abbey Laurel Smith,Republican,https://smithiegoeswest.com/,The47thPOTUS
+16,Ray McGuire,Democrat,https://www.rayformayor.com/,RayForMayor
+17,Carlos Menchaca,Democrat,https://carlos2021.com/,cmenchaca
+18,Dianne Morales,Democrat,https://www.dianne.nyc/,Dianne4NYC
+19,Bill Pepitone,Republican,https://billpepitonefornycmayor.com/,PepitoneForNYC
+20,Angelo Pinto,Other,https://twitter.com/angelopinto720,angelopinto720
+21,Paperboy Prince,Democrat,http://paperboyprince.com/,PaperboyPrince
+22,Stacey Prussman,Other,https://www.prussmanformayor.com/aboutstacey,StaceyPrussman
+23,Stephen Bishop Seely,Other,https://www.seely4mayor.com/,Seely4Mayor
+24,Ira Seidman,Democrat,https://www.seidmanformayor.com/,IraSeidman
+25,Curtis Sliwa,Republican,https://www.facebook.com/SliwaforNYC2021/,SliwaforNYC2021
+26,Scott Stringer,Democrat,https://stringerformayor.com/,scottmstringer
+27,Loree Sutton,Democrat,https://loreeformayor.nyc/,LoreeSuttonNYC
+28,Ahsan Syed,Other,https://twitter.com/endorsenyc,endorsenyc
+29,Joycelyn Taylor,Democrat,https://taylorfor2021.com/,Taylorfor2021
+30,Sara Tirschwell,Republican,https://www.saraformayor.com,sara4mayor
+31,Maya Wiley,Democrat,https://mayawileyformayor.com/,mayawiley
+32,Isaac Wright Jr.,Democrat,https://wrightfornyc2021.com/,IsaacWrightJr
+33,Andrew Yang,Democrat,https://www.yangforny.com/,AndrewYang

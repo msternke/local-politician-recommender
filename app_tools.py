@@ -14,7 +14,7 @@ nest_asyncio.apply()
 
 from bokeh.plotting import figure
 from bokeh.embed import components
-from bokeh.models import ColumnDataSource, HoverTool
+from bokeh.models import ColumnDataSource, HoverTool, Legend
 
 from bs4 import BeautifulSoup
 
@@ -144,20 +144,31 @@ def make_pca_plot(pcs, labels):
 
     return(p)
 
-def make_sim_bar_chart(matrix):
+def make_sim_bar_chart(matrix, info_df):
 
-    tools = ['pan', 'reset', HoverTool(tooltips=[("Politician", "@x"), ("Similarity", "@top")])]
+    merged = matrix.merge(info_df, left_index = True, right_on='name')
 
-    p = figure(x_range=matrix.index.to_list(), plot_height=400,
-               plot_width=600, tools=tools)
+    color_dict = {'Democrat': 'royalblue', 'Republican': 'firebrick', 'Other': 'gray'}
+    colors = [color_dict[party] for party in merged['party']]
 
-    p.vbar(x=matrix.index.to_list(), top=matrix.values.flatten(), width=0.75)
+    source = ColumnDataSource(data={
+        'x': [i.replace("-"," ") for i in matrix.index],
+        'top': matrix.values.flatten(),
+        'color': colors,
+        'label': merged['party'].to_list(),
+        'width': [0.9]*len(merged)})
+
+    p = figure(x_range=matrix.index.to_list(), plot_height=500, plot_width=700, toolbar_location=None)
+    p.add_layout(Legend(), 'right')
+
+    p.vbar(x='x', top='top', width='width', color='color', legend_field='label', source=source)
 
     p.xgrid.grid_line_color = None
     p.yaxis.axis_label = 'Similarity'
     p.xaxis.major_label_orientation = 45
-    p.xaxis.major_label_text_font_size = "10pt"
-    p.axis.axis_label_text_font_size = "10pt"
+    p.xaxis.major_label_text_font_size = "12pt"
+    p.axis.axis_label_text_font_size = "12pt"
+    p.add_tools(HoverTool(tooltips=[("Politician", "@x"), ("Similarity", "@top")]))
 
     return(p)
 
