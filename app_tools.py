@@ -1,7 +1,6 @@
 import pandas as pd
 import pickle
 import os
-import glob
 import re
 import string
 import emoji
@@ -15,6 +14,8 @@ nest_asyncio.apply()
 from bokeh.plotting import figure
 from bokeh.embed import components
 from bokeh.models import ColumnDataSource, HoverTool, Legend
+
+from wordcloud import WordCloud, STOPWORDS
 
 from bs4 import BeautifulSoup
 
@@ -30,6 +31,17 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.decomposition import PCA
 
 def scrape_user(username):
+    '''
+    Scrapes tweets for the user entered politicians
+
+    Parameters:
+        username (str): Twitter handle of politician entered by user
+
+    Returns:
+        tweets_df_filtered (pandsd dataframe): dataframe of scraped tweets
+
+    '''
+
     if username[0] == '@':
         username = username[1:]
 
@@ -50,11 +62,21 @@ def scrape_user(username):
     return tweets_df_filtered
 
 def clean_tweet_sentiment_analysis(tweet):
+    '''
+    Cleans tweet for sentiment analysis
+
+    Parameters:
+        tweet (str): Tweet to be cleaned
+
+    Returns:
+        tweet (str): Cleaned tweet
+
+    '''
 
     #converts html to text
     tweet = BeautifulSoup(tweet, 'lxml').text
 
-    #removes links
+    #removes url links
     tweet = re.sub(r'http\S+', '', tweet)
 
     #removes twitter usernames
@@ -63,9 +85,31 @@ def clean_tweet_sentiment_analysis(tweet):
     return(tweet)
 
 def calc_tweet_sentiment(tweet, sent_analyzer):
-    return sent_analyzer.polarity_scores(tweet)['compound']
+    '''
+    Calculates sentiment score of Tweet
+
+    Parameters:
+        tweet (str): Tweet to Analyze
+        sent_analyser (VaderSentiment instance): sentiment analyzer object
+
+    Returns:
+        compound_score (float): Compound score of tweet; sentiment score
+    '''
+
+    compound_score = sent_analyzer.polarity_scores(tweet)['compound']
+
+    return compound_score
 
 def clean_tweet_tfidf(tweet):
+    '''
+    Cleans tweets for TF-IDF
+
+    Parameters:
+        tweet (str): Tweet to clean
+
+    Returns:
+        cleaned_tweet (str): Cleaned Tweet
+    '''
 
     custom_punctuation = '!"#&\'()*+,-./:;<=>?@[\\]^_`{|}~\''
     custom_stop_words = [word.replace("'", "") for word in stopwords.words('english')] \
@@ -81,25 +125,61 @@ def clean_tweet_tfidf(tweet):
     cleaned_tweet = re.sub(emoji.get_emoji_regexp(), r"", cleaned_tweet)
 
     #remove stop words
-    cleaned_tweet = ' '.join([item for item in cleaned_tweet.split() if item not in custom_stop_words])
+    cleaned_tweet = ' '.join([item for item in cleaned_tweet.split() \
+        if item not in custom_stop_words])
 
     return(cleaned_tweet)
 
 def get_wordnet_pos(word):
-    """Map POS tag to first character lemmatize() accepts"""
+    '''
+    Maps POS tag to word as character Lemmatize function accepts
+
+    Parameters:
+        word (str): Word to tags
+
+    Returns:
+        tagged_char (str): Character for tag
+    '''
     tag = nltk.pos_tag([word])[0][1][0].upper()
     tag_dict = {"J": wordnet.ADJ, "N": wordnet.NOUN, "V": wordnet.VERB, "R": wordnet.ADV}
 
-    return tag_dict.get(tag, wordnet.NOUN)
+    tagged_char = tag_dict.get(tag, wordnet.NOUN)
+
+    return tagged_char
 
 def lemmatize_tweets(tweets):
+    '''
+    Lemmatize Tweets for TF-IDF analysis
+
+    Parameters:
+        tweets (list): List of tweets to lemmatize
+
+    Returns:
+        lemmatized_list (list): List of lemmatized Tweets
+    '''
+
     #initialize lemmatizer
     lemmatizer = WordNetLemmatizer()
 
     #lemmatize the words
-    return [' '.join([lemmatizer.lemmatize(w, get_wordnet_pos(w)) for w in nltk.word_tokenize(tweet)]) for tweet in tweets]
+    lemmatized_list = [' '.join([lemmatizer.lemmatize(w, get_wordnet_pos(w)) \
+        for w in nltk.word_tokenize(tweet)]) for tweet in tweets]
+
+    return lemmatized_list
 
 def calc_word_vectors(df, words):
+    '''
+    Calculate vectors of top words as mean sentiment scores of tweets containing
+    a given word
+
+    Parameters:
+        df (dataframe): Politician dataframe containing Tweets
+        words(list): List of top words among politicians
+
+    Returns:
+        word_scores (list): List scores for each word to make vector
+    '''
+
     word_scores = []
     for word in words:
         word_df = df[df['lemmatized_tweets'].str.contains(word)]
@@ -110,6 +190,16 @@ def calc_word_vectors(df, words):
     return(word_scores)
 
 def create_similarity_matrix(similarity_tool, df_vectors):
+    '''
+    Creates similarity matrix from word vectors among group of politicians
+
+    Parameters:
+        similarity_tool (obj): Tool used to determine similarities
+        df_vectors (dataframe): matrix of word vectors for each politician
+
+    Returns:
+        df (dataframe): Matrix of similarity scores as dataframe
+    '''
 
     similarities = np.zeros((len(df_vectors), len(df_vectors)))
 
@@ -123,28 +213,17 @@ def create_similarity_matrix(similarity_tool, df_vectors):
 
     return df
 
-def make_pca_plot(pcs, labels):
-    source = ColumnDataSource({
-        'x': pcs[:, 0],
-        'y': pcs[:, 1],
-        'label': labels
-    })
-
-    tools = ['tap', 'reset', HoverTool(tooltips = '@label')]
-
-    p = figure(plot_width=700, plot_height=400, tools=tools)
-
-    p.circle(x = 'x', y = 'y', size=10, source = source)
-    #p.circle(x = 'x', y = 'y', legend_field = 'label', size=10, source = source)
-    #p.add_layout(p.legend[0], 'right')
-
-    p.xaxis.axis_label = 'PC1'
-    p.yaxis.axis_label = 'PC2'
-    p.legend.click_policy="hide"
-
-    return(p)
-
 def make_sim_bar_chart(matrix, info_df):
+    '''
+    Makes bar chart showing similarity scores to user entered politician
+
+    Parameters:
+        matrix (dataframe): Matrix of similarity scores
+        info_df (dataframe): Dataframe containing information on politicians
+
+    Returns:
+        p (figure): Bokeh figure of bar chart
+    '''
 
     merged = matrix.merge(info_df, left_index = True, right_on='name')
 
@@ -172,8 +251,20 @@ def make_sim_bar_chart(matrix, info_df):
 
     return(p)
 
-
 def determine_user_similarity(username, reference_matrix):
+    '''
+    Main function to run analysis for determining similarity of user entered
+    politician to set of reference politicians
+
+    Parameters:
+        username (str): Twitter handle of politician entered by user
+        reference_matrix (dataframe): Matrix of reference politician word vectors
+
+    Returns:
+        matrix_copy (dataframe): Matrix of word vectors with user entered politician added
+        cos_sim_df (dataframe): Matrix of politician similarities
+    '''
+
     matrix_copy = reference_matrix.copy()
 
     #scrape profile of entered user
