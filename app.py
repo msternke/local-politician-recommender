@@ -1,14 +1,6 @@
 from flask import Flask, render_template, request
 import pandas as pd
-import numpy as np
 import pickle
-
-from bokeh.plotting import figure
-from bokeh.embed import components
-from bokeh.models import ColumnDataSource, HoverTool, Legend
-
-from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.decomposition import PCA
 
 import app_tools
 
@@ -63,13 +55,15 @@ def local_race_analysis():
         website = cand_info['website']
         party = cand_info['party']
 
+        word_cloud = f"static/img/nyc_mayor_wordclouds/{similarity_vector.index[cand_index].replace(' ', '-')}.png"
+
     else:
         return render_template('local-race.html')
 
     return render_template('local-race-analysis.html', script=script,
                             div=div, entered_handle=handle, top=chosen_cand,
                             top_img=top_img, most_least=most_least, website=website,
-                            out_party=party)
+                            out_party=party, word_cloud=word_cloud)
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
