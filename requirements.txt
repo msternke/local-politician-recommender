@@ -9,5 +9,5 @@ wordcloud==1.8.0
 bs4==0.0.1
 vaderSentiment==3.3.2
 nltk==3.5
-sklearn==0.23.2
+sklearn>=0.23
 flask==1.1.2
