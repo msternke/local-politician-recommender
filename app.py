@@ -2,6 +2,8 @@ from flask import Flask, render_template, request
 import pandas as pd
 import pickle
 
+from sklearn.metrics.pairwise import cosine_similarity
+
 import app_tools
 
 app = Flask(__name__)
