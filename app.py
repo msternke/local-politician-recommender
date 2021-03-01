@@ -3,6 +3,7 @@ import pandas as pd
 import pickle
 
 from sklearn.metrics.pairwise import cosine_similarity
+from bokeh.embed import components
 
 import app_tools
 
