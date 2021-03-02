@@ -49,7 +49,7 @@ def scrape_user(username):
     c.Hide_output = True
     c.Username = username
     c.Pandas = True
-    c.Limit = 500
+    c.Limit = 400
     c.Filter_retweets = False
 
     twint.run.Search(c)
